@@ -1,8 +1,35 @@
+const Sequelize = require ('sequelize')
+const { STRING } = Sequelize
+const conn = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/bookmarks_db')
 
+const Bookmark = conn.define('Bookmark', {
+    name: {
+        type: STRING,
+        allowNull: false
+    },
+    URL: {
+        type: STRING,
+        allowNull: false
+    },
+    category: {
+        type: STRING,
+        allowNull: false
+    }
 
+})
 
+const syncAndSeed = async () => {
+    await conn.sync({ force: true})
+    await data.map(bookmark => Bookmark.create(bookmark))
+}
 
-
+module.exports = {
+    syncAndSeed,
+    conn,
+    models: {
+        Bookmark
+    }
+}
 
 
 const data = [
